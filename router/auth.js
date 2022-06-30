@@ -18,10 +18,6 @@ router.use(cookieParser());
 require("../db/connection");
 const User = require("../model/userSchema");
 
-router.get("/", async (req, res) => {
-  res.send("Hello from home")
-});
-
 router.get("/home", async (req, res) => {
   console.log("This is home from server");
   const existData = await User.find({},{_id:0});
