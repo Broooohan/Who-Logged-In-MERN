@@ -14,7 +14,7 @@ const About = () => {
 
   const callAboutPage = async () => {
     try {
-      const res = await fetch("/getdata", {
+      const res = await fetch("/about", {
         method: "GET",
         headers: {
           Accept: "application/json",
