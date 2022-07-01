@@ -1,11 +1,10 @@
 const express = require("express");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const authenticate = require("../middleware/authenticate")
+const authenticate = require("../middleware/authenticate");
 // const alldata = require("../middleware/alldata")
-const cookieParser =require("cookie-parser");
-
+const cookieParser = require("cookie-parser");
 
 // router.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
@@ -18,15 +17,11 @@ router.use(cookieParser());
 require("../db/connection");
 const User = require("../model/userSchema");
 
-router.get("/home", authenticate , async (req, res) => {
-  const existData = await User.find({},{_id:0});
-  let x = {...existData};
+router.get("/home", authenticate, async (req, res) => {
+  const existData = await User.find({}, { _id: 0 });
+  let x = { ...existData };
   // console.log(x);
-  if (req.rootuser) {
-    res.status(200).json(x);
-  }else{
-    res.status(400).json(x);
-  }
+  res.status(200).json(x);
 });
 
 router.post("/signup", async (req, res) => {
@@ -52,7 +47,9 @@ router.post("/signup", async (req, res) => {
       const userRegister = await user.save();
 
       if (userRegister) {
-        return res.status(201).json({ message: "user registered succuessfully" });
+        return res
+          .status(201)
+          .json({ message: "user registered succuessfully" });
       }
     }
   } catch (err) {
@@ -61,7 +58,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  let token
+  let token;
   const { email, password } = req.body;
   // res.json({ message: "Thanks" });
   // console.log(email);
@@ -83,25 +80,25 @@ router.post("/login", async (req, res) => {
         token = await userLogin.generateAuthToken();
         // console.log(token);
 
-        res.cookie("jwtoken" , token, {
-          expires:new Date(Date.now() + 25892000000),
-          httpOnly:true
+        res.cookie("jwtoken", token, {
+          expires: new Date(Date.now() + 25892000000),
+          httpOnly: true,
         });
 
         res.json({ message: "Login successful" });
         // console.log(userLogin);
       }
-    } else{
-        res.status(400).json({error:"Invalid cred"})
+    } else {
+      res.status(400).json({ error: "Invalid cred" });
     }
   } catch (err) {
     // console.log(err);
   }
 });
 
-router.get("/getdata", authenticate , async (req, res) => {
+router.get("/getdata", authenticate, async (req, res) => {
   console.log("This is my about page");
-  res.json(req.rootUser)
+  res.json(req.rootUser);
   // console.log(req.rootUser);
 });
 
@@ -109,32 +106,30 @@ router.post("/msg", authenticate, async (req, res) => {
   try {
     const msg = req.body;
     // res.send(msg)
-    if(!(msg.msg)){
+    if (!msg.msg) {
       console.log("No msg");
       return res.status(422).json("Pls fill the contact form");
     }
 
-    const userContact = await User.findOne({_id: req.userID})
+    const userContact = await User.findOne({ _id: req.userID });
 
     if (userContact) {
       const userMsg = await userContact.addMsg(msg);
 
       await userContact.save();
-      res.status(201).json({message:"User contact created successfully"})
-
+      res.status(201).json({ message: "User contact created successfully" });
     }
-
   } catch (err) {
-    res.status(401).send("login to send msg")
+    res.status(401).send("login to send msg");
     console.log(err);
   }
 });
 
-router.get("/logout" , (req,res) => {
+router.get("/logout", (req, res) => {
   console.log("Hello from Logout page");
-  res.clearCookie('jwtoken', {path:'/'})
+  res.clearCookie("jwtoken", { path: "/" });
   res.status(200).send("Logout successful");
-})
+});
 
 module.exports = router;
 
