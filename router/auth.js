@@ -18,12 +18,15 @@ router.use(cookieParser());
 require("../db/connection");
 const User = require("../model/userSchema");
 
-router.get("/home", async (req, res) => {
-  console.log("This is home from server");
+router.get("/home", authenticate , async (req, res) => {
   const existData = await User.find({},{_id:0});
   let x = {...existData};
   // console.log(x);
-  res.json(x);
+  if (req.rootuser) {
+    res.status(200).json(x);
+  }else{
+    res.status(400).json(x);
+  }
 });
 
 router.post("/signup", async (req, res) => {

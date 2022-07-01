@@ -16,6 +16,13 @@ const Home = () => {
       let hehe = Object.values(res.data);
       console.log(Object.values(hehe)); //Converts object of objects to array of arrays
       setUser(hehe);
+
+      if (res.status === 400) {
+        dispatch({type:"USER" , payload:false})
+      }else{
+        dispatch({type:"USER" , payload:true})
+      }
+
     } catch (err) {
       console.log(err);
     }
