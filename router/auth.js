@@ -17,7 +17,7 @@ router.use(cookieParser());
 require("../db/connection");
 const User = require("../model/userSchema");
 
-router.get("/home", authenticate, async (req, res) => {
+router.get("/home", async (req, res) => {
   const existData = await User.find({}, { _id: 0 });
   let x = { ...existData };
   // console.log(x);
