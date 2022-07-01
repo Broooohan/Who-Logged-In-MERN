@@ -102,6 +102,10 @@ router.get("/getdata", authenticate, async (req, res) => {
   // console.log(req.rootUser);
 });
 
+router.get("/gethomedata", authenticate, async (req, res) => {
+  res.status(200).json(req.rootUser);
+});
+
 router.post("/msg", authenticate, async (req, res) => {
   try {
     const msg = req.body;

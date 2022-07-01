@@ -26,6 +26,26 @@ const Home = () => {
     callHomePage();
   }, []);
 
+  const callAuthenticate = async () => {
+    try {
+      const res = await axios.get("/gethomedata");
+
+      if (res.status === 200)
+      {
+        dispatch({type:"USER" , payload:true})
+      }else{
+        dispatch({type:"USER" , payload:false})
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    callAuthenticate();
+  }, []);
+
   return (
     <>
       <div className="homebg">
