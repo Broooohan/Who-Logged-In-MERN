@@ -5,7 +5,7 @@ import Heading from "./Heading";
 import { UserContext } from "../App";
 
 const Home = () => {
-  // const {state, dispatch} = useContext(UserContext);
+  const {state, dispatch} = useContext(UserContext);
 
   const [users, setUser] = useState([]);
 
