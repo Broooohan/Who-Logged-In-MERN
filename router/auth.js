@@ -96,14 +96,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/about", authenticate , async (req, res) => {
+router.get("/getdata", authenticate , async (req, res) => {
   console.log("This is my about page");
-  res.json(req.rootUser)
-  // console.log(req.rootUser);
-});
-
-router.get("/contact", authenticate , async (req, res) => {
-  console.log("This is my contact page");
   res.json(req.rootUser)
   // console.log(req.rootUser);
 });

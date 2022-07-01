@@ -15,7 +15,7 @@ const Contact = () => {
 
   const callContactPage = async () => {
     try {
-      const res = await fetch("/contact", {
+      const res = await fetch("/getdata", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
