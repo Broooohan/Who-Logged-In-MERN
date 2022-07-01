@@ -21,7 +21,7 @@ router.get("/home", authenticate, async (req, res) => {
   const existData = await User.find({}, { _id: 0 });
   let x = { ...existData };
   // console.log(x);
-  res.status(200).json(x);
+  res.json(x);
 });
 
 router.post("/signup", async (req, res) => {

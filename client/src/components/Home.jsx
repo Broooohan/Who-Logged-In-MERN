@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     callHomePage();
-  }, []);
+  });
 
   const callAuthenticate = async () => {
     try {
@@ -44,7 +44,7 @@ const Home = () => {
 
   useEffect(() => {
     callAuthenticate();
-  }, []);
+  });
 
   return (
     <>
